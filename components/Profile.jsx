@@ -1,0 +1,30 @@
+import PromptCard from "./PromptCard";
+import { useSearchParams } from "next/navigation";
+
+const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
+
+  const searchParams = useSearchParams();
+  const userName = searchParams.get("name");
+
+  return (
+    <section className='w-full'>
+      <h1 className='head_text text-left'>
+        <span className='blue_gradient'>{ name ? `${name}的主页` : `我的主页` }</span>
+      </h1>
+      <p className='desc text-left'>{desc}</p>
+
+      <div className='mt-10 prompt_layout'>
+        {data.map((post) => (
+          <PromptCard
+            key={post._id}
+            post={post}
+            handleEdit={() => handleEdit && handleEdit(post)}
+            handleDelete={() => handleDelete && handleDelete(post)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Profile;
